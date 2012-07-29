@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <title>bookmarked.</title>
+    <link rel="stylesheet" href="/assets/style.css">
+  </head>
+  <body>
+    <h1>bookmarked</h1>
+    <form name="bookmarked" action="/create_bookmark">
+      <input type="text" name="name" placeholder="name">
+      <input type="text" name="url" placeholder="url">
+      <input type="submit" name="commit">
+    </form>
+    <ul>
+      {{ range $.Bookmarks }}
+        <li>
+          <a href="{{ .Url }}">{{ .Name }}</a>
+        </li>
+      {{ end }}
+    </ul>
+    <script src="/assets/scripts.js"></script>
+  </body>
+</html>
