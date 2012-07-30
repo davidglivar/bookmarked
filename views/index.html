@@ -14,7 +14,7 @@
     <ul>
       {{ range $.Bookmarks }}
         <li>
-          <a href="{{ .Url }}">{{ .Name }}</a>
+          <a href="{{ .Url }}">{{ .Name }}</a> [<a href="/delete_bookmark" class="destroyer" data-id="{{ .Id }}">X</a>]
         </li>
       {{ end }}
     </ul>
