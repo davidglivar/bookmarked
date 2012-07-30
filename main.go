@@ -25,7 +25,6 @@ type Bookmark struct {
 func DBconnect() (db *sql.DB) {
 	db, err := sql.Open("postgres", "user=davidglivar dbname=bookmarked sslmode=disable")
 	if err != nil {
-		log.Println("Error: Cannot establish connection to database.")
 		log.Println(err)
 	}
 	return
@@ -36,7 +35,6 @@ func DBconnect() (db *sql.DB) {
 func DBclose(db *sql.DB) {
 	err := db.Close()
 	if err != nil {
-		log.Println("Error: Cannot close connection to database.")
 		log.Println(err)
 	}
 }
@@ -48,7 +46,6 @@ func Bookmarks() (bookmarks []Bookmark) {
 	defer DBclose(db)
 	rows, err := db.Query("SELECT * FROM bookmarks")
 	if err != nil {
-		log.Println("Error Querying database.")
 		log.Println(err)
 		return
 	}
@@ -59,7 +56,6 @@ func Bookmarks() (bookmarks []Bookmark) {
 		var name, url string
 		err := rows.Scan(&id, &name, &url)
 		if err != nil {
-			log.Println("Error during row.Scan()")
 			log.Println(err)
 			return
 		}
@@ -102,7 +98,6 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 	defer DBclose(db)
 	_, err := db.Exec("INSERT INTO bookmarks (name, url) VALUES ($1, $2)", name, url)
 	if err != nil {
-		log.Println("ERROR! Could not create record.")
 		log.Println(err)
 		return
 	}
@@ -115,7 +110,6 @@ func destroyHandler(w http.ResponseWriter, r *http.Request) {
 	defer DBclose(db)
 	_, err := db.Exec("DELETE FROM bookmarks WHERE id = $1", id)
 	if err != nil {
-		log.Println("ERROR! Could not delete record.")
 		log.Println(err)
 		return
 	}
